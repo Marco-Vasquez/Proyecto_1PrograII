@@ -64,6 +64,7 @@ public class GestorPlayers implements Almacenamiento{
         Player jugador=buscarPlayer(user,0);
         if(jugador!=null && jugador.getPassword().equals(actPassword)){
             jugador.setPassword(newPassword);
+            return true;
         }
         return false;
     }
@@ -88,5 +89,7 @@ public class GestorPlayers implements Almacenamiento{
     public void guardarResultadoPartida(String user, String resultado) {
         listaHistorial.add(0,"["+user+"]"+resultado);
     }
-    
+    public Player buscarPlayerPublico(String user){
+        return buscarPlayer(user,0);
+    }
 }

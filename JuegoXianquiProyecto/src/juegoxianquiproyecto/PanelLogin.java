@@ -26,12 +26,12 @@ public class PanelLogin extends JPanel{
         titulo.setFont(TemaGUI.fuente(Font.BOLD, 26));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setMaximumSize(new Dimension(320,40));
         campoUser=TemaGUI.crearCampoTexto();
         campoContra=TemaGUI.crearCampoContraseña();
         msjError=TemaGUI.crearMsjError();
         campoUser.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoContra.setAlignmentX(Component.CENTER_ALIGNMENT);
-        msjError.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton btnEntrar=TemaGUI.crearBoton("Entrar");
         JButton btnVolver=TemaGUI.crearBoton("Volver");
         btnEntrar.setAlignmentX(Component.CENTER_ALIGNMENT);

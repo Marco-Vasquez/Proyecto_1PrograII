@@ -44,6 +44,7 @@ public class PanelMyAccount extends JPanel {
         titulo.setFont(TemaGUI.fuente(Font.BOLD,26));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setMaximumSize(new Dimension(320,44));
         datoUser=crearDato("Usuario: "+nombreUser);
         datoPoints=crearDato("Puntos: 0");
         datoGames=crearDato("Partidas jugadas: 0");

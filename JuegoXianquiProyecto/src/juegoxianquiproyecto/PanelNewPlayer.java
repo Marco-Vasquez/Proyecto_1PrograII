@@ -26,16 +26,13 @@ public class PanelNewPlayer extends JPanel {
         titulo.setFont(TemaGUI.fuente(Font.BOLD, 26));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel aviso=new JLabel("La contraseña debe tener exactamente 5 caracteres");
-        aviso.setFont(TemaGUI.fuente(Font.ITALIC,12));
-        aviso.setForeground(TemaGUI.GRIS_TEXTOS);
-        aviso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setMaximumSize(new Dimension(320,40));
+        JLabel aviso=TemaGUI.crearTexto("La contraseña debe tener exactamente 5 caracteres");
         campoUser=TemaGUI.crearCampoTexto();
         campoContra=TemaGUI.crearCampoContraseña();
         msjError=TemaGUI.crearMsjError();
         campoUser.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoContra.setAlignmentX(Component.CENTER_ALIGNMENT);
-        msjError.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton btnCrear,btnVolver;
         btnCrear=TemaGUI.crearBoton("Crear");
         btnVolver=TemaGUI.crearBoton("Volver");

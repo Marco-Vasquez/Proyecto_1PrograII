@@ -39,15 +39,21 @@ public class TemaGUI {
         JLabel etiqueta=new JLabel(texto);
         etiqueta.setFont(fuente(Font.BOLD,13));
         etiqueta.setForeground(DORADO);
+        etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiqueta.setMaximumSize(new Dimension(260,20));
+        etiqueta.setPreferredSize(new Dimension(260,20));
         return etiqueta;
     }
     public static JLabel crearMsjError(){
-        JLabel etiqueta=new JLabel(" ");
+        JLabel etiqueta=new JLabel(" ",SwingConstants.CENTER);
         etiqueta.setFont(fuente(Font.PLAIN,12));
         etiqueta.setForeground(new Color(220,60,60));
         etiqueta.setHorizontalAlignment(SwingConstants.CENTER);
         etiqueta.setPreferredSize(new Dimension(260,18));
         etiqueta.setMaximumSize(new Dimension(260,18));
+        etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiqueta.setPreferredSize(new Dimension(320,18));
+        etiqueta.setMaximumSize(new Dimension(320,18));
         return etiqueta;
     }
     public static JTextField crearCampoTexto(){
@@ -71,5 +77,14 @@ public class TemaGUI {
         campo.setPreferredSize(new Dimension(260,36));
         campo.setMaximumSize(new Dimension(260,36));
         return campo;
+    }
+    public static JLabel crearTexto(String texto){
+        JLabel etiqueta=new JLabel(texto,SwingConstants.CENTER);
+        etiqueta.setFont(fuente(Font.ITALIC,12));
+        etiqueta.setForeground(GRIS_TEXTOS);
+        etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        etiqueta.setMaximumSize(new Dimension(320,20));
+        etiqueta.setPreferredSize(new Dimension(320,20));
+        return etiqueta;
     }
 }

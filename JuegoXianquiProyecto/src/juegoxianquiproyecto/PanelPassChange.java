@@ -39,8 +39,8 @@ public class PanelPassChange extends JPanel {
             campoNuevo.setText("");
             return;
         }
-        //codigo faltante para cambio de contra
-        boolean cambio=false;
+        boolean cambio;
+        cambio=ventana.getGestor().changePassword(nombreUser,actual,nueva);
         if(cambio){
             JOptionPane.showMessageDialog(ventana,"Contraseña cambiada exitosamente");
             ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MYACCOUNT,new PanelMyAccount(ventana,nombreUser));
@@ -58,10 +58,8 @@ public class PanelPassChange extends JPanel {
         titulo.setFont(TemaGUI.fuente(Font.BOLD,24));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        aviso=new JLabel("La nueva contraseña debe de contener 5 caracteres");
-        aviso.setFont(TemaGUI.fuente(Font.ITALIC,12));
-        aviso.setForeground(TemaGUI.GRIS_TEXTOS);
-        aviso.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setMaximumSize(new Dimension(320,44));
+        aviso=TemaGUI.crearTexto("La nueva contraseña debe contener exactamente 5 caracteres");
         campoAct=TemaGUI.crearCampoContraseña();
         campoAct.setAlignmentX(Component.CENTER_ALIGNMENT);
         campoNuevo=TemaGUI.crearCampoContraseña();

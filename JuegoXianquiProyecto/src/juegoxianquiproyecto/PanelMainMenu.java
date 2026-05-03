@@ -28,10 +28,12 @@ public class PanelMainMenu extends JPanel{
         titulo.setFont(TemaGUI.fuente(Font.BOLD, 28));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titulo.setMaximumSize(new Dimension(320,44));
         JLabel msjBienvenida=new JLabel("Bienvenido "+nombreUser,SwingConstants.CENTER);
         msjBienvenida.setFont(TemaGUI.fuente(Font.ITALIC,14));
         msjBienvenida.setForeground(TemaGUI.GRIS_TEXTOS);
         msjBienvenida.setAlignmentX(Component.CENTER_ALIGNMENT);
+        msjBienvenida.setMaximumSize(new Dimension(320,22));
         JSeparator separador=new JSeparator();
         separador.setForeground(TemaGUI.DORADO);
         separador.setAlignmentX(Component.CENTER_ALIGNMENT);
