@@ -32,7 +32,13 @@ public class PanelPlay extends JPanel{
         etqPlayer1.setFont(TemaGUI.fuente(Font.PLAIN,13));
         etqPlayer1.setForeground(TemaGUI.CREMA);
         etqPlayer1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JComboBox<String> selecOponente=new JComboBox<>(new String[]{"-- Selecciona un oponente --"});
+        JComboBox<String> selecOponente=new JComboBox<>();
+        selecOponente.addItem("-- Selecciona un oponente --");
+        for(Player player:ventana.getGestor().getListaPLayers()){
+            if(player.isActivo() && !player.getUser().equals(nombreUser)){
+                selecOponente.addItem(player.getUser());
+            }
+        }
         selecOponente.setFont(TemaGUI.fuente(Font.PLAIN,13));
         selecOponente.setBackground(new Color(60,35,35));
         selecOponente.setForeground(TemaGUI.CREMA);

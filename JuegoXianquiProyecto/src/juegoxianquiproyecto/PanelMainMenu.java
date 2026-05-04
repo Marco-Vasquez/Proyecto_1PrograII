@@ -49,12 +49,7 @@ public class PanelMainMenu extends JPanel{
         btnJugar.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_PLAY,new PanelPlay(ventana,nombreUser)));
         btnCuenta.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MYACCOUNT,new PanelMyAccount(ventana,nombreUser)));
         btnReports.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_REPORTS,new PanelReports(ventana,nombreUser)));
-        btnExit.addActionListener(e->{
-            int respuesta;
-            respuesta=JOptionPane.showConfirmDialog(ventana, "Deseas cerrar sesión?","Cerrar Sesión",JOptionPane.YES_NO_OPTION);
-            if(respuesta==JOptionPane.YES_OPTION)
-                ventana.mostrarPantalla(VentanaPrincipalApp.PANTALLA_INICIO);
-        });
+        btnExit.addActionListener(e->ventana.mostrarPantalla(VentanaPrincipalApp.PANTALLA_INICIO));
         add(titulo);
         add(Box.createVerticalStrut(6));
         add(msjBienvenida);

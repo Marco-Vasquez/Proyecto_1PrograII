@@ -55,7 +55,7 @@ public class GestorPlayers implements Almacenamiento{
     public boolean eliminarPlayer(String user, String password) {
         Player jugador=buscarPlayer(user,0);
         if(jugador!=null && jugador.getPassword().equals(password)){
-            jugador.setActivo(false);
+            listaPlayers.remove(jugador);
             return true;
         }
         return false;

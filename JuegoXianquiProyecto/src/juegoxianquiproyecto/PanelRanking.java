@@ -6,6 +6,7 @@ package juegoxianquiproyecto;
 import java.awt.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
+import java.util.ArrayList;
 /**
  *
  * @author andres
@@ -30,8 +31,13 @@ public class PanelRanking extends JPanel {
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         String columnas[]={"#","Jugador","Punto"};
-        //falta codigo con los datos reales del juego
-        Object datos[][]={};
+        ArrayList<Player> ranking=ventana.getGestor().obtenerRanking();
+        Object datos[][]=new Object[ranking.size()][3];
+        for(int control=0;control<ranking.size();control++){
+            datos[control][0]=control+1;
+            datos[control][1]=ranking.get(control).getUser();
+            datos[control][2]=ranking.get(control).getPuntos();
+        }
         DefaultTableModel tablaModelo=new DefaultTableModel(datos,columnas){
             public boolean isCellEditable(int fila,int columna){
                 return false;
