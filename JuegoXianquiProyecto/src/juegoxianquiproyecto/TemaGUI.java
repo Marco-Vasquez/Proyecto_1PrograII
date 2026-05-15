@@ -83,8 +83,8 @@ public class TemaGUI {
         etiqueta.setFont(fuente(Font.ITALIC,12));
         etiqueta.setForeground(GRIS_TEXTOS);
         etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        etiqueta.setMaximumSize(new Dimension(320,20));
-        etiqueta.setPreferredSize(new Dimension(320,20));
+        etiqueta.setMaximumSize(new Dimension(320,36));
+        etiqueta.setPreferredSize(new Dimension(320,36));
         return etiqueta;
     }
 }

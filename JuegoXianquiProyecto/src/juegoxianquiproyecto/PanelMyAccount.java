@@ -13,6 +13,9 @@ public class PanelMyAccount extends JPanel {
     private final VentanaPrincipalApp ventana;
     private final String nombreUser;
     private JLabel msjExito;
+    private JPanel panelConfirm;
+    private JPasswordField campoConfirmDelete;
+    private JLabel msjErrorDelete;
     public PanelMyAccount(VentanaPrincipalApp ventana){
         this(ventana,"Jugador");
     }
@@ -41,109 +44,102 @@ public class PanelMyAccount extends JPanel {
         etiqueta.setAlignmentX(Component.CENTER_ALIGNMENT);
         return etiqueta;
     }
-    private void confirmDelete(){
-        JDialog dialogo=new JDialog(ventana,"Elminar Cuenta",true);
-        dialogo.setSize(380,280);
-        dialogo.setLocationRelativeTo(ventana);
-        dialogo.setResizable(false);
-        dialogo.setUndecorated(false);
-        JPanel panelEliminar=new JPanel();
-        panelEliminar.setLayout(new BoxLayout(panelEliminar,BoxLayout.Y_AXIS));
-        panelEliminar.setBackground(TemaGUI.FONDO_OSCURO);
-        panelEliminar.setBorder(BorderFactory.createEmptyBorder(30,40,300,40));
-        JLabel titulo;
-        titulo=new JLabel("Eliminar Cuenta",SwingConstants.CENTER);
-        titulo.setFont(TemaGUI.fuente(Font.BOLD,20));
-        titulo.setForeground(new Color(220,60,60));
+    private void mostrarConfirmDelete(boolean mostrar){
+        panelConfirm.setVisible(mostrar);
+        campoConfirmDelete.setText("");
+        msjErrorDelete.setText("");
+        revalidate();
+        repaint();
+    }
+    private void construirUI(){
+        JLabel titulo=new JLabel("Mi Cuenta",SwingConstants.CENTER);
+        titulo.setFont(TemaGUI.fuente(Font.BOLD,26));
+        titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setMaximumSize(new Dimension(300,32));
-        JLabel aviso,msjError;
-        aviso=TemaGUI.crearTexto("Esta accion es irreversible. Ingresa tu contraseña para validar:");
-        JPasswordField campoConfirm=TemaGUI.crearCampoContraseña();
-        campoConfirm.setAlignmentX(Component.CENTER_ALIGNMENT);
-        msjError=TemaGUI.crearMsjError();
+        titulo.setMaximumSize(new Dimension(320,44));
+        Player jugador;
+        jugador=ventana.getGestor().buscarPlayerPublico(nombreUser);
+        JLabel datoUser,datoPoints,datoGames,datoDate;
+        datoUser=crearDato("Usuario: "+nombreUser);
+        datoPoints=crearDato("Puntos: "+(jugador!=null ? jugador.getPuntos():0));
+        datoGames=crearDato("Partidas jugadas: 0");
+        datoDate=crearDato("Miembro desde: "+(jugador!=null ? jugador.getIngreso():"-"));
+        JSeparator separador;
+        separador=new JSeparator();
+        separador.setForeground(TemaGUI.DORADO);
+        separador.setMaximumSize(new Dimension(300,2));
+        msjExito=TemaGUI.crearMsjError();
+        msjExito.setForeground(new Color(80,200,80));
+        JButton btnPassword,btnDelete,btnVolver;
+        btnPassword=TemaGUI.crearBoton("Cambiar contraseña");
+        btnPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnDelete=TemaGUI.crearBoton("Elminiar mi cuenta");
+        btnDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnVolver=TemaGUI.crearBoton("Volver");
+        btnVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelConfirm=new JPanel();
+        panelConfirm.setLayout(new BoxLayout(panelConfirm,BoxLayout.Y_AXIS));
+        panelConfirm.setBackground(TemaGUI.FONDO_OSCURO);
+        panelConfirm.setVisible(false);
+        JLabel avisoDelete=TemaGUI.crearTexto("Ingresa tu contraseña para confirmar:");
+        campoConfirmDelete=TemaGUI.crearCampoContraseña();
+        campoConfirmDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
+        msjErrorDelete=TemaGUI.crearMsjError();
         JButton btnConfirm,btnCancel;
         btnConfirm=TemaGUI.crearBoton("Confirmar eliminación");
         btnConfirm.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnCancel=TemaGUI.crearBoton("Cancelar");
         btnCancel.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnConfirm.addActionListener(e->{
-            String ingreso=new String(campoConfirm.getPassword());
+            String ingreso;
+            ingreso=new String(campoConfirmDelete.getPassword());
             if(ingreso.isEmpty()){
-                msjError.setText("Debes ingresar tu contraseña");
+                msjErrorDelete.setText("Debes ingresar tu contraseña");
                 return;
             }
-            boolean eliminado=ventana.getGestor().eliminarPlayer(nombreUser, ingreso);
-            if(eliminado){
-                dialogo.dispose();
+            try{
+                ventana.getGestor().eliminarPlayerValidado(nombreUser, ingreso);
                 ventana.mostrarPantalla(VentanaPrincipalApp.PANTALLA_INICIO);
             }
-            else{
-                msjError.setText("Contraseña incorrecta, intentalo de nuevo");
-                campoConfirm.setText("");
+            catch(IncorrectPasswordException ex){
+                msjErrorDelete.setText(ex.getMessage());
+                campoConfirmDelete.setText("");
             }
         });
-        btnCancel.addActionListener(e->dialogo.dispose());
-        campoConfirm.addActionListener(e->btnConfirm.doClick());
-        panelEliminar.add(titulo);
-        panelEliminar.add(Box.createVerticalStrut(10));
-        panelEliminar.add(aviso);
-        panelEliminar.add(Box.createVerticalStrut(16));
-        panelEliminar.add(campoConfirm);
-        panelEliminar.add(Box.createVerticalStrut(8));
-        panelEliminar.add(msjError);
-        panelEliminar.add(Box.createVerticalStrut(12));
-        panelEliminar.add(btnConfirm);
-        panelEliminar.add(Box.createVerticalStrut(8));
-        panelEliminar.add(btnCancel);
-        dialogo.setContentPane(panelEliminar);
-        dialogo.setVisible(true);
-    }
-    private void construirUI(){
-        JLabel titulo,datoUser,datoPoints,datoGames,datoDate;
-        titulo=new JLabel("Mi Cuenta",SwingConstants.CENTER);
-        titulo.setFont(TemaGUI.fuente(Font.BOLD,26));
-        titulo.setForeground(TemaGUI.DORADO);
-        titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titulo.setMaximumSize(new Dimension(320,44));
-        datoUser=crearDato("Usuario: "+nombreUser);
-        Player jugador=ventana.getGestor().buscarPlayerPublico(nombreUser);
-        datoPoints=crearDato("Puntos: "+(jugador!=null ? jugador.getPuntos():0));
-        datoGames=crearDato("Partidas jugadas: 0");
-        datoDate=crearDato("Miembro desde: "+(jugador!=null ? jugador.getIngreso():"-"));
-        JSeparator separador=new JSeparator();
-        separador.setForeground(TemaGUI.DORADO);
-        separador.setMaximumSize(new Dimension(300,2));
-        JButton btnPassword,btnDelete,btnVolver;
-        btnPassword=TemaGUI.crearBoton("Cambiar contraseña");
-        btnDelete=TemaGUI.crearBoton("Eliminar mi cuenta");
-        btnVolver=TemaGUI.crearBoton("Volver");
-        btnPassword.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnDelete.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnCancel.addActionListener(e->mostrarConfirmDelete(false));
+        campoConfirmDelete.addActionListener(e->btnConfirm.doClick());
+        panelConfirm.add(avisoDelete);
+        panelConfirm.add(Box.createVerticalStrut(6));
+        panelConfirm.add(campoConfirmDelete);
+        panelConfirm.add(Box.createVerticalStrut(4));
+        panelConfirm.add(msjErrorDelete);
+        panelConfirm.add(Box.createVerticalStrut(8));
+        panelConfirm.add(btnConfirm);
+        panelConfirm.add(Box.createVerticalStrut(6));
+        panelConfirm.add(btnCancel);
         btnPassword.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_PASSCHANGE,new PanelPassChange(ventana,nombreUser)));
-        btnDelete.addActionListener(e->confirmDelete());
+        btnDelete.addActionListener(e->mostrarConfirmDelete(true));
         btnVolver.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MAINMENU,new PanelMainMenu(ventana,nombreUser)));
         add(titulo);
-        add(Box.createVerticalStrut(24));
+        add(Box.createVerticalStrut(16));
         add(datoUser);
-        add(Box.createVerticalStrut(8));
+        add(Box.createVerticalStrut(6));
         add(datoPoints);
-        add(Box.createVerticalStrut(8));
+        add(Box.createVerticalStrut(6));
         add(datoGames);
-        add(Box.createVerticalStrut(8));
+        add(Box.createVerticalStrut(6));
         add(datoDate);
-        add(Box.createVerticalStrut(24));
+        add(Box.createVerticalStrut(16));
         add(separador);
-        add(Box.createVerticalStrut(10));
-        msjExito=TemaGUI.crearMsjError();
-        msjExito.setForeground(new Color(80,200,80));
+        add(Box.createVerticalStrut(8));
         add(msjExito);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(8));
         add(btnPassword);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(8));
         add(btnDelete);
-        add(Box.createVerticalStrut(10));
+        add(Box.createVerticalStrut(8));
+        add(panelConfirm);
+        add(Box.createVerticalStrut(8));
         add(btnVolver);
     }
 }

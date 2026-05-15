@@ -92,4 +92,13 @@ public class GestorPlayers implements Almacenamiento{
     public Player buscarPlayerPublico(String user){
         return buscarPlayer(user,0);
     }
+    public void eliminarPlayerValidado(String user,String password) throws IncorrectPasswordException{
+        Player jugador=buscarPlayer(user,0);
+        if(jugador!=null && jugador.getPassword().equals(password)){
+            listaPlayers.remove(jugador);
+        }
+        else{
+            throw new IncorrectPasswordException("Contraseña incorrecta, intentalo de nuevo");
+        }
+    }
 }
