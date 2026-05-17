@@ -194,8 +194,8 @@ public class PanelTablero extends JPanel {
             if(movimientoValid){
                 actualizarEstado();
                 if(partida.isTerminada()){
-                    ventana.getGestor().guardarResultadoPartida(partida.getPlayerRojo().getUser(),partida.getResultado());
-                    ventana.getGestor().guardarResultadoPartida(partida.getPlayerNegro().getUser(),partida.getResultado());
+                    ventana.getGestor().guardarResultadoPartida(partida.getPlayerRojo().getUser(),partida.getLogCorto());
+                    ventana.getGestor().guardarResultadoPartida(partida.getPlayerNegro().getUser(),partida.getLogCorto());
                     mostrarResultado();
                 }
             }

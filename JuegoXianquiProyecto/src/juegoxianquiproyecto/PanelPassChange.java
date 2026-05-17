@@ -42,7 +42,7 @@ public class PanelPassChange extends JPanel {
         boolean cambio;
         cambio=ventana.getGestor().changePassword(nombreUser,actual,nueva);
         if(cambio){
-            ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MYACCOUNT,new PanelMyAccount(ventana,nombreUser,"Contraseñea cambiada exitosamente"));   
+            ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MYACCOUNT,new PanelMyAccount(ventana,nombreUser,"Contraseña cambiada exitosamente"));   
         }
         else{
             msjError.setText("Revisa que ingresaste la contraseña actual correcta");

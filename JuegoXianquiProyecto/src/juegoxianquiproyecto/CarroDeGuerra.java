@@ -8,35 +8,12 @@ package juegoxianquiproyecto;
  *
  * @author andres
  */
-public final class CarroDeGuerra extends Pieza {
+public final class CarroDeGuerra extends PiezaDeAtaque {
     public CarroDeGuerra(int fila,int columna,ColorPieza color){
         super(fila,columna,color);
     }
     public String getNombre(){
         return "CarroDeGuerra";
-    }
-    private final boolean caminoLibre(int filaDestino,int colDestino,Pieza[][] tablero){
-        if(filaDestino==getFila()){
-            int desde,hasta;
-            desde=Math.min(getColumna(),colDestino)+1;
-            hasta=Math.max(getColumna(),colDestino);
-            for(int control=desde;control<hasta;control++){
-                if(tablero[getFila()][control]!=null){
-                    return false;
-                }
-            }
-        }
-        else{
-            int desde,hasta;
-            desde=Math.min(getFila(),filaDestino)+1;
-            hasta=Math.max(getFila(),filaDestino);
-            for(int control=desde;control<hasta;control++){
-                if(tablero[control][getColumna()]!=null){
-                    return false;
-                }
-            }
-        }
-        return true;
     }
     public final boolean isValidMovement(int filaDestino,int colDestino,Pieza[][] tablero){
         if(!dentroDelTablero(filaDestino,colDestino)){

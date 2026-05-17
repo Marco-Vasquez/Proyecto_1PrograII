@@ -8,36 +8,12 @@ package juegoxianquiproyecto;
  *
  * @author andres
  */
-public class Cañon extends Pieza {
+public class Cañon extends PiezaDeAtaque {
     public Cañon(int fila,int columna,ColorPieza color){
         super(fila,columna,color);
     }
     public String getNombre(){
         return "Cañon";
-    }
-    private int contarPiezasMedio(int filaDestino,int colDestino,Pieza[][] tablero){
-        int contador=0;
-        if(filaDestino==getFila()){
-            int desde,hasta;
-            desde=Math.min(getColumna(),colDestino)+1;
-            hasta=Math.max(getColumna(),colDestino);
-            for(int control=desde;control<hasta;control++){
-                if(tablero[getFila()][control]!=null){
-                    contador++;
-                }
-            }
-        }
-        else{
-            int desde,hasta;
-            desde=Math.min(getFila(),filaDestino)+1;
-            hasta=Math.max(getFila(),filaDestino);
-            for(int control=desde;control<hasta;control++){
-                if(tablero[getColumna()][control]!=null){
-                    contador++;
-                }
-            }
-        }
-        return contador;
     }
     public boolean isValidMovement(int filaDestino,int colDestino,Pieza[][] tablero){
         if(!dentroDelTablero(filaDestino,colDestino)){
