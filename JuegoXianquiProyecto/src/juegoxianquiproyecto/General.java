@@ -37,4 +37,12 @@ public class General extends Pieza{
             return false;
         return dentroPalacio(filaDestino,colDestino);
     }
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/general_rojo.png";
+        }
+        else{
+            return "imagenes/general_negro.png";
+        }
+    }
 }

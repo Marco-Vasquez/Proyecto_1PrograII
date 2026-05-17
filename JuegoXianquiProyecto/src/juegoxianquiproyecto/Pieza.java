@@ -53,4 +53,5 @@ public abstract class Pieza {
     public String toString(){
         return getNombre()+"("+color+") en ["+fila+","+columna+"]";
     }
+    public abstract String getRutaImagen();
 }

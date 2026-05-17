@@ -40,4 +40,12 @@ public class Oficial extends Pieza{
         }
         return dentroPalacio(filaDestino,colDestino);
     }
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/oficial_rojo.png";
+        }
+        else{
+            return "imagenes/oficial_negro.png";
+        }
+    }
 }

@@ -42,4 +42,12 @@ public class Elefante extends Pieza {
         }
         return true;
     }
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/elefante_rojo.png";
+        }
+        else{
+            return "imagenes/elefante_negro.png";
+        }
+    }
 }

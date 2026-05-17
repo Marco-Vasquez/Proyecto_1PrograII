@@ -53,4 +53,12 @@ public final class CarroDeGuerra extends Pieza {
         }
         return caminoLibre(filaDestino,colDestino,tablero);
     }
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/carro_rojo.png";
+        }
+        else{
+            return "imagenes/carro_negro.png";
+        }
+    }
 }

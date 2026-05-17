@@ -30,7 +30,7 @@ public class PanelRanking extends JPanel {
         titulo.setFont(TemaGUI.fuente(Font.BOLD,24));
         titulo.setForeground(TemaGUI.DORADO);
         titulo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        String columnas[]={"#","Jugador","Punto"};
+        String columnas[]={"#","Jugador","Puntos"};
         ArrayList<Player> ranking=ventana.getGestor().obtenerRanking();
         Object datos[][]=new Object[ranking.size()][3];
         for(int control=0;control<ranking.size();control++){

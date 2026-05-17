@@ -23,6 +23,7 @@ public class VentanaPrincipalApp extends JFrame{
     public static final String PANTALLA_RANKING="ranking";
     public static final String PANTALLA_HISTORIAL="historial";
     public static final String PANTALLA_PLAY="jugar";
+    public static final String PANTALLA_TABLERO="tablero";
     public VentanaPrincipalApp(){
         setTitle("Xiangqui - Ajedrez Chino");
         setSize(480,580);
@@ -55,5 +56,13 @@ public class VentanaPrincipalApp extends JFrame{
     public void recargarPantalla(String nombre,JPanel panelNuevo){
         panelNav.add(panelNuevo,nombre);
         flujoJuego.show(panelNav, nombre);
+    }
+    public void cambiarSizeVentana(int ancho,int alto){
+        setSize(ancho,alto);
+        setLocationRelativeTo(null);
+    }
+    public void restaurarSizeVentana(){
+        setSize(480,580);
+        setLocationRelativeTo(null);
     }
 }

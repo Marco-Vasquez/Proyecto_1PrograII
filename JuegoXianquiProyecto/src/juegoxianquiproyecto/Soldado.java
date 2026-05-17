@@ -50,5 +50,13 @@ public class Soldado extends Pieza{
                 return (difFila==1 && difCol==0) || (difFila==0 && Math.abs(difCol)==1);
             }
         }
-    }        
+    }      
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/soldado_rojo.png";
+        }
+        else{
+            return "imagenes/soldado_negro.png";
+        }
+    }
 }

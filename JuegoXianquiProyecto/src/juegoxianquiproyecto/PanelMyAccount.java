@@ -62,7 +62,7 @@ public class PanelMyAccount extends JPanel {
         JLabel datoUser,datoPoints,datoGames,datoDate;
         datoUser=crearDato("Usuario: "+nombreUser);
         datoPoints=crearDato("Puntos: "+(jugador!=null ? jugador.getPuntos():0));
-        datoGames=crearDato("Partidas jugadas: 0");
+        datoGames=crearDato("Partidas jugadas: "+(jugador!=null ? jugador.getPartidasJugadas():0));
         datoDate=crearDato("Miembro desde: "+(jugador!=null ? jugador.getIngreso():"-"));
         JSeparator separador;
         separador=new JSeparator();

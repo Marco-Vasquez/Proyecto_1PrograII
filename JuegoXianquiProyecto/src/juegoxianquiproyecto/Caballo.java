@@ -41,5 +41,12 @@ public class Caballo extends Pieza {
         }
         return false;
     }
-    
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/caballo_rojo.png";
+        }
+        else{
+            return "imagenes/caballo_negro.png";
+        }
+    }
 }

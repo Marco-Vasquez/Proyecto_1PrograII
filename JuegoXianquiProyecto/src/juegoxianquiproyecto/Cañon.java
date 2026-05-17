@@ -63,4 +63,12 @@ public class Cañon extends Pieza {
             return piezasEnMedio==1;
         }
     }
+    public String getRutaImagen(){
+        if(getColor()==ColorPieza.ROJO){
+            return "imagenes/canon_rojo.png";
+        }
+        else{
+            return "imagenes/canon_negro.png";
+        }
+    }
 }

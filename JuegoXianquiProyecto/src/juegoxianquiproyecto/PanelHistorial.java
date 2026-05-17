@@ -49,22 +49,19 @@ public class PanelHistorial extends JPanel {
         texto.setForeground(TemaGUI.CREMA);
         texto.setBackground(TemaGUI.PANEL);
         texto.setEditable(false);
+        texto.setLineWrap(true);
+        texto.setWrapStyleWord(true);
         JScrollPane scrollear=new JScrollPane(texto);
         scrollear.setMaximumSize(new Dimension(360,260));
         scrollear.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton btnActualizar,btnVolver;
-        btnActualizar=TemaGUI.crearBoton("Actualizar");
-        btnActualizar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnVolver=TemaGUI.crearBoton("Volver");
         btnVolver.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnActualizar.addActionListener(e->cargarHistorial());
         btnVolver.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_REPORTS,new PanelReports(ventana,nombreUser)));
         add(titulo);
         add(Box.createVerticalStrut(16));
         add(scrollear);
         add(Box.createVerticalStrut(14));
-        add(btnActualizar);
-        add(Box.createVerticalStrut(10));
         add(btnVolver);
     }
 }

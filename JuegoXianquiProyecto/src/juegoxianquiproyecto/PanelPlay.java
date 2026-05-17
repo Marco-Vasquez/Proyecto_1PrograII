@@ -57,7 +57,12 @@ public class PanelPlay extends JPanel{
                 msjError.setText("Debes de seleccionar un oponente para jugar");
                 return;
             }
-            //código de los tableros
+            Player jugador1,jugador2;
+            jugador1=ventana.getGestor().buscarPlayerPublico(nombreUser);
+            jugador2=ventana.getGestor().buscarPlayerPublico(oponente);
+            Partida partida;
+            partida=new Partida(jugador1,jugador2);
+            ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_TABLERO,new PanelTablero(ventana,partida));
         });
         btnVolver.addActionListener(e->ventana.recargarPantalla(VentanaPrincipalApp.PANTALLA_MAINMENU,new PanelMainMenu(ventana,nombreUser)));
         add(titulo);
