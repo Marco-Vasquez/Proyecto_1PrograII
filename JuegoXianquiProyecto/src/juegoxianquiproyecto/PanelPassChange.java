@@ -34,8 +34,8 @@ public class PanelPassChange extends JPanel {
             msjError.setText("Debes de ingresar tu contraseña actual");
             return;
         }
-        if(nueva.length()!=5){
-            msjError.setText("La nueva contraseña debe de tener 5 caracteres");
+        if(!TemaGUI.validPassword(nueva)){
+            msjError.setText("Minimo: 5 caracteres, 1 mayúscula, 1 minúscula y 1 numero");
             campoNuevo.setText("");
             return;
         }

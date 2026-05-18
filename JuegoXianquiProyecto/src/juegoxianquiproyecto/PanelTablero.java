@@ -15,16 +15,20 @@ public class PanelTablero extends JPanel {
     private final Partida partida;
     private static final int TAM_CELDA=52;
     private static final int MARGEN=50;
+    private static final int ESPACIO_CAPTURADAS=75;
+    private static final int ESPACIO_CONTROLES=120;
     private int filaSelec=-1;
     private int columnaSelec=-1;
     private JLabel labelEstado;
     private JButton btnRetirar;
+    private java.util.ArrayList<int[]> movimientosDisponibles=new java.util.ArrayList<>();
+    private java.util.ArrayList<Pieza> piezasCapturadas=new java.util.ArrayList<>();
     public PanelTablero(VentanaPrincipalApp ventana,Partida partida){
         this.ventana=ventana;
         this.partida=partida;
         int anchoPanel,altoPanel;
         anchoPanel=TAM_CELDA*8+MARGEN*2;
-        altoPanel=TAM_CELDA*10+MARGEN*2+80;
+        altoPanel=TAM_CELDA*9+MARGEN*2+ESPACIO_CAPTURADAS+ESPACIO_CONTROLES;
         setPreferredSize(new Dimension(anchoPanel,altoPanel));
         setBackground(TemaGUI.FONDO_OSCURO);
         setLayout(null);
@@ -34,12 +38,12 @@ public class PanelTablero extends JPanel {
                 manejarClick(e.getX(),e.getY());
             }
         });
-        ventana.cambiarSizeVentana(TAM_CELDA*8+MARGEN*2+30,TAM_CELDA*10+MARGEN*2+130);
+        ventana.cambiarSizeVentana(TAM_CELDA*8+MARGEN*2+30,TAM_CELDA*10+MARGEN*2+180);
     }  
     private void construirBotones(){
         int anchoPanel,yBotones;
         anchoPanel=TAM_CELDA*8+MARGEN*2;
-        yBotones=TAM_CELDA*9+MARGEN+16;
+        yBotones=MARGEN+TAM_CELDA*9+95;
         labelEstado=new JLabel("Turno: "+partida.getNombreTurno(),SwingConstants.CENTER);
         labelEstado.setFont(TemaGUI.fuente(Font.BOLD,14));
         labelEstado.setForeground(TemaGUI.DORADO);
@@ -147,6 +151,16 @@ public class PanelTablero extends JPanel {
         g2.drawString(nombre,casillaHoriz-fuentes.stringWidth(nombre)/2,casillaVert+fuentes.getAscent()/2-1);
     }
     private void dibujarSeleccion(Graphics2D g2){
+        for(int[] mov:movimientosDisponibles){
+            int casillaHoriz,casillaVert;
+            casillaHoriz=MARGEN+mov[1]*TAM_CELDA;
+            casillaVert=MARGEN+mov[0]*TAM_CELDA;
+            g2.setColor(new Color(0,255,0,80));
+            g2.fillOval(casillaHoriz-TAM_CELDA/2+4,casillaVert-TAM_CELDA/2+4,TAM_CELDA-8,TAM_CELDA-8);
+            g2.setColor(new Color(0,200,0,160));
+            g2.setStroke(new BasicStroke(1.5f));
+            g2.drawOval(casillaHoriz-TAM_CELDA/2+4,casillaVert-TAM_CELDA/2+4,TAM_CELDA-8,TAM_CELDA-8);
+        }
         if(filaSelec==-1){
             return;
         }
@@ -165,6 +179,7 @@ public class PanelTablero extends JPanel {
         dibujarTablero(g2);
         dibujarPiezas(g2);
         dibujarSeleccion(g2);
+        dibujarCapturadas(g2);
     }
     private void manejarClick(int x,int y){
         if(partida.isTerminada()){
@@ -184,9 +199,18 @@ public class PanelTablero extends JPanel {
             if(pieza!=null && pieza.getColor()==partida.getTurnoAct()){
                 filaSelec=fila;
                 columnaSelec=columna;
+                movimientosDisponibles.clear();
+                for(int filas=0;filas<10;filas++){
+                    for(int columnas=0;columnas<9;columnas++){
+                        if(pieza.isValidMovement(filas, columnas, casillas)){
+                            movimientosDisponibles.add(new int[]{filas,columnas});
+                        }
+                    }
+                }
             }
         }
         else{
+            movimientosDisponibles.clear();
             boolean movimientoValid;
             movimientoValid=partida.realizarMovimiento(filaSelec,columnaSelec,fila,columna);
             filaSelec=-1;
@@ -209,11 +233,12 @@ public class PanelTablero extends JPanel {
     }
     private void mostrarResultado(){
         btnRetirar.setVisible(false);
+        labelEstado.setBounds(20, MARGEN + TAM_CELDA*9+95,TAM_CELDA*8+MARGEN*2,24);
         labelEstado.setText(partida.getResultado());
         labelEstado.setForeground(new Color(80,200,80));
         int anchoPanel,botonVert;
         anchoPanel=TAM_CELDA*8+MARGEN*2;
-        botonVert=TAM_CELDA*9+MARGEN+70;
+        botonVert=MARGEN+TAM_CELDA*9+125;
         JButton btnVolver;
         btnVolver=TemaGUI.crearBoton("Volver al menú");
         btnVolver.setBounds((anchoPanel-260)/2,botonVert,260,40);
@@ -224,5 +249,61 @@ public class PanelTablero extends JPanel {
         add(btnVolver);
         revalidate();
         repaint();
+    }
+    private void dibujarCapturadas(Graphics2D g2){
+        java.util.ArrayList<Pieza> capturadas=partida.getCapturadas();
+        if(capturadas.isEmpty()){
+            return;
+        }
+        java.util.ArrayList<Pieza> rojas=new java.util.ArrayList<>();
+        java.util.ArrayList<Pieza> negras=new java.util.ArrayList<>();
+        for(Pieza p:capturadas){
+            if(p.getColor()==ColorPieza.ROJO){
+                rojas.add(p);
+            }
+            else{
+                negras.add(p);
+            }
+        }
+        int yBase=MARGEN+9*TAM_CELDA+30;
+        int radioP=15;
+        int separac=36;
+        int xIzq=MARGEN;
+        g2.setColor(TemaGUI.GRIS_TEXTOS);
+        g2.setFont(TemaGUI.fuente(Font.PLAIN, 11));
+        g2.drawString("Negras capturadas:", xIzq, yBase + 12);
+        dibujarFilaCapturadas(g2, negras, xIzq + 150, yBase - 8, radioP, separac);
+        g2.drawString("Rojas capturadas:", xIzq, yBase + 55);
+        dibujarFilaCapturadas(g2, rojas, xIzq + 150, yBase + 35, radioP, separac);
+    }
+
+    private void dibujarFilaCapturadas(Graphics2D g2,java.util.ArrayList<Pieza> lista,int xInicio,int y,int radio,int separador){
+        for(int control=0;control<lista.size();control++){
+            Pieza pieza=lista.get(control);
+            int casillaHoriz=xInicio+control*separador+radio;
+            int casillaVert=y+radio;
+            if(casillaHoriz + radio > MARGEN + 8*TAM_CELDA){
+                break;
+            }
+            if(pieza.getColor()==ColorPieza.ROJO){
+                g2.setColor(new Color(180,20,20));
+            }
+            else {
+                g2.setColor(new Color(20,20,20));
+            }
+            g2.fillOval(casillaHoriz-radio, casillaVert-radio, radio*2, radio*2);
+            g2.setColor(TemaGUI.DORADO);
+            g2.setStroke(new BasicStroke(1f));
+            g2.drawOval(casillaHoriz-radio, casillaVert-radio, radio*2, radio*2);
+            try{
+                java.net.URL url=getClass().getClassLoader().getResource(pieza.getRutaImagen());
+                if(url!=null){
+                    Image img=javax.imageio.ImageIO.read(url);
+                    int tam=radio*2-4;
+                    g2.drawImage(img, casillaHoriz-tam/2, casillaVert-tam/2, tam, tam, null);
+                }
+            } catch(Exception ex){
+            }
+        }
     }
 }

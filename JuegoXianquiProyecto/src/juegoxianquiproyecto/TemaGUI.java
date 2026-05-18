@@ -87,4 +87,25 @@ public class TemaGUI {
         etiqueta.setPreferredSize(new Dimension(320,36));
         return etiqueta;
     }
+    public static boolean validPassword(String password){
+        if(password.length()<5){
+            return false;
+        }
+        boolean mayus,minus,numero;
+        mayus=false;
+        minus=false;
+        numero=false;
+        for(char caracter:password.toCharArray()){
+            if(Character.isUpperCase(caracter)){
+                mayus=true;
+            }
+            if(Character.isLowerCase(caracter)){
+                minus=true;
+            }
+            if(Character.isDigit(caracter)){
+                numero=true;
+            }
+        }
+        return mayus && minus && numero;
+    }
 }

@@ -16,6 +16,7 @@ public class Partida {
     private boolean terminada;
     private String resultado;
     private String logCorto;
+    private java.util.ArrayList<Pieza> capturadas=new java.util.ArrayList<>();
     public Partida(Player jugadorRojo,Player jugadorNegro){
         this.playerRojo=jugadorRojo;
         this.playerNegro=jugadorNegro;
@@ -51,6 +52,9 @@ public class Partida {
     }
     public String getLogCorto(){
         return logCorto;
+    }
+    public java.util.ArrayList<Pieza> getCapturadas(){
+        return capturadas;
     }
     private void cambiarTurno(){
         turnoActual=(turnoActual==ColorPieza.ROJO) ? ColorPieza.NEGRO:ColorPieza.ROJO;
@@ -90,29 +94,35 @@ public class Partida {
         if(terminada){
             return false;
         }
-        Pieza pieza;
-        pieza=tablero.getPieza(filaOrigen,colOrigen);
+        Pieza pieza=tablero.getPieza(filaOrigen,colOrigen);
         if(pieza==null){
             return false;
         }
         if(pieza.getColor()!=turnoActual){
             return false;
         }
-        if(!pieza.isValidMovement(filaDestino, colDestino, tablero.getCasillas())){
+        if(!pieza.isValidMovement(filaDestino,colDestino,tablero.getCasillas())){
             return false;
         }
-        Pieza piezaDestino;
-        piezaDestino=tablero.getPieza(filaDestino, colDestino);
+        Pieza piezaDestino=tablero.getPieza(filaDestino,colDestino);
+        tablero.getCasillas()[filaDestino][colDestino]=pieza;
+        tablero.getCasillas()[filaOrigen][colOrigen]=null;
+        pieza.setFila(filaDestino);
+        pieza.setColumna(colDestino);
+        if(tablero.generalesEnfrentados()){
+            tablero.getCasillas()[filaOrigen][colOrigen]=pieza;
+            tablero.getCasillas()[filaDestino][colDestino]=piezaDestino;
+            pieza.setFila(filaOrigen);
+            pieza.setColumna(colOrigen);
+            return false;
+        }
+        if(piezaDestino!=null){
+            capturadas.add(piezaDestino);
+        }
         if(piezaDestino instanceof General){
-            tablero.moverPieza(filaOrigen,colOrigen,filaDestino,colDestino);
-            if(tablero.generalesEnfrentados()){
-                tablero.moverPieza(filaDestino,colDestino,filaOrigen,colOrigen);
-                return false;
-            }
             terminarPartida(turnoActual);
             return true;
         }
-        tablero.moverPieza(filaOrigen,colOrigen,filaDestino,colDestino);
         cambiarTurno();
         return true;
     }

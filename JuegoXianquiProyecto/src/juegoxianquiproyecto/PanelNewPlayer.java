@@ -71,8 +71,8 @@ public class PanelNewPlayer extends JPanel {
             msjError.setText("El usuario no puede estar vacio");
             return;
         }
-        if(contra.length()!=5){
-            msjError.setText("La contraseña debe tener exactamente 5 caracteres");
+        if(!TemaGUI.validPassword(contra)){
+            msjError.setText("Minimo: 5 caracteres, 1 mayúscula, 1 minúscula y 1 numero");
             campoContra.setText("");
             return;
         }
