@@ -31,7 +31,7 @@ public class Elefante extends Pieza {
         if(getColor()==ColorPieza.ROJO && filaDestino<5){
             return false;
         }
-        if(getColor()==ColorPieza.NEGRO && filaDestino>=4){
+        if(getColor()==ColorPieza.NEGRO && filaDestino>=5){
             return false;
         }
         int filaMed,colMed;
